@@ -1,0 +1,7 @@
+{
+  "id": "plg_REPLACE_ME",
+  "runtime": "lua",
+  "version": "1.0.0",
+  "entry": "main.lua",
+  "src": "."
+}

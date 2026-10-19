@@ -1,0 +1,3 @@
+# Store and check out text with LF everywhere so a script packs to the same
+# bytes on Windows, macOS and the SDN build.
+* text=auto eol=lf
