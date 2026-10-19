@@ -32,7 +32,7 @@ push builds before then; they aren't visible to users until approval.
 
 ## 3. Install the SafeRS GitHub App on your repo
 
-1. Open **https://github.com/apps/__APP_SLUG__/installations/new**.
+1. Open **https://github.com/apps/safersdev/installations/new**.
 2. Choose the account that owns your repo.
 3. Pick **Only select repositories** and select this repo. Don't grant it
    repos you don't publish from.
