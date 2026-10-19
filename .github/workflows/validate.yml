@@ -11,6 +11,9 @@ permissions:
 
 jobs:
   validate:
+    # The template itself ships a placeholder id on purpose; copies made from
+    # it are not templates, so they are always checked.
+    if: ${{ !github.event.repository.is_template }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
