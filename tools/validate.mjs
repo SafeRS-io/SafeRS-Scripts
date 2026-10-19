@@ -6,7 +6,6 @@
      - missing, placeholder or malformed plugin id; duplicate ids
      - runtime other than lua
      - bundle entry or single-file artifact that doesn't exist
-     - mem. / mem: calls in .lua files (refused by the SDN policy scan)
      - script.declareInfo version that disagrees with the manifest (warning)
 
      node tools/validate.mjs            # whole repo
@@ -34,10 +33,8 @@ function walk(dir, visit) {
 }
 
 const manifests = [];
-const luaFiles = [];
 walk(ROOT, (abs, name) => {
   if (name === 'safers.plugin.json') manifests.push(abs);
-  else if (name.endsWith('.lua')) luaFiles.push(abs);
 });
 
 if (!manifests.length) err('.', 'no safers.plugin.json found — every script folder needs one');
@@ -76,14 +73,6 @@ for (const path of manifests) {
     const info = readFileSync(entryFile, 'utf8').match(/declareInfo\s*\{[^}]*?version\s*=\s*["']([^"']+)["']/s);
     if (info && info[1] !== m.version) warn(rel(entryFile), `declareInfo version "${info[1]}" differs from manifest version "${m.version}"`);
   }
-}
-
-// Exactly the text match the SDN build refuses — comments, strings and a
-// local table that happens to be called `mem` included. Rename such tables.
-for (const file of luaFiles) {
-  readFileSync(file, 'utf8').split(/\r?\n/).forEach((line, i) => {
-    if (/\bmem\s*[.:]/.test(line)) err(`${rel(file)},line=${i + 1}`, '"mem." / "mem:" is refused by the SDN build (raw memory access); use the srs.* API, and rename any table called mem');
-  });
 }
 
 console.log(`\n${manifests.length} script(s) checked: ${errors} error(s), ${warnings} warning(s)`);

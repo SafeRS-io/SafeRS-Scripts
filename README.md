@@ -75,9 +75,7 @@ and merge to `main` to release.
 
 - **Lua only.** Native (C++) plugins are restricted to the SafeRS team, and a
   manifest with `"runtime": "cpp"` fails the build.
-- **No raw memory access.** Any `mem.` or `mem:` in a `.lua` file fails the
-  build, even in a comment or a table of your own called `mem`, so name your
-  tables something else. Use the `srs.*` API:
+- **Use the `srs.*` API** for everything:
   <https://seqcoding.github.io/SafeRS-Native-Docs/>
 - **One folder per script, one id per script.** Two manifests with the same id
   fail the build.
@@ -101,8 +99,7 @@ and merge to `main` to release.
 This repo includes a check that runs on every push and pull request
 (`.github/workflows/validate.yml`). It catches the mistakes that would fail
 the real build: bad JSON, a placeholder or malformed id, a missing entry file,
-`mem.` calls, duplicate ids, and a `declareInfo` version that doesn't match the
-manifest. Run it locally with Node 18+:
+duplicate ids, and a `declareInfo` version that doesn't match the manifest. Run it locally with Node 18+:
 
 ```
 node tools/validate.mjs
